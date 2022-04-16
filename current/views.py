@@ -4,11 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.http  import Http404,HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import  render, redirect,get_object_or_404
-from .forms import NewUserForm 
+from .forms import HoodForm, NewUserForm 
 from django.contrib.auth import login,authenticate,logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.urls import reverse
 from .models import NeighbourHood,Business,Post,Profile
 
 # Create your views here.
@@ -32,6 +33,21 @@ def register_request(request):
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = NewUserForm()
 	return render (request=request, template_name="main/register.html", context={"register_form":form})
+
+
+def new_neighborhood(request):
+	if request.method =='POST':
+		form =HoodForm(request.POST, request.FILEs)
+		if form.is_valid():
+			hood =form.save(commit=False)
+			hood.save()
+			return HttpResponseRedirect(reverse("hoods"))
+
+	else:
+		form =HoodForm()
+	return render(request, 'main/newhood.html',{'form':form})			
+
+
 
 
 def login_request(request):
