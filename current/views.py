@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http  import Http404,HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import  render, redirect,get_object_or_404
-from .forms import HoodForm, NewUserForm 
+from .forms import HoodForm, NewUserForm,UpdateUserForm,UpdateUserProfileForm,UserCreationForm 
 from django.contrib.auth import login,authenticate,logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
@@ -46,7 +46,22 @@ def new_neighborhood(request):
 	else:
 		form =HoodForm()
 	return render(request, 'main/newhood.html',{'form':form})			
+@login_required(login_url='login')
+def profile(request, username):
+    current_user=request.user
+           
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateUserProfileForm(instance=request.user.profile)
 
+    return render(request, 'main/profile.html', {'user_form':user_form,'profile_form':profile_form})
 
 
 
