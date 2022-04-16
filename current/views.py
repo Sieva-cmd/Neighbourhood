@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 
 import datetime as dt
 from django.contrib.auth.decorators import login_required
@@ -11,11 +9,17 @@ from django.contrib.auth import login,authenticate,logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from .models import NeighbourHood,Business,Post,Profile
 
 # Create your views here.
 def home(request):
     return render(request,'main/home.html')
 
+
+def neighborhood(request):
+	current_user =request.user
+	hoods =NeighbourHood.objects.all()
+	return render(request, "main/hoods.html",{'hoods':hoods,'current_user':current_user})
 
 def register_request(request):
 	if request.method == "POST":
