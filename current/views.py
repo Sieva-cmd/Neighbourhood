@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http  import Http404,HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import  render, redirect,get_object_or_404
-from .forms import HoodForm, NewUserForm,UpdateUserForm,UpdateUserProfileForm,UserCreationForm,BusinessForm
+from .forms import HoodForm, NewUserForm,UpdateUserForm,UpdateUserProfileForm,UserCreationForm,BusinessForm,PostForm
 from django.contrib.auth import login,authenticate,logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
@@ -96,7 +96,7 @@ def update_hood(request,id):
         return redirect('hoods')
     else:
         form = HoodForm(instance=instance)
-    return render(request,'all-neighbour/newhood.html',{'form':form,'title':title})
+    return render(request,'main/newhood.html',{'form':form,'title':title})
 
 @login_required(login_url='login')
 def new_business(request,id):
@@ -127,6 +127,24 @@ def update_business(request,id,bus_id):
         
         bus_form = BusinessForm(instance=instance)
     return render(request,'main/business.html',{'bus_form':bus_form,'title':title})
+
+
+@login_required(login_url='login')
+def new_post(request,id):
+    hood = NeighbourHood.objects.get(id=id)
+    title = 'ADD POST'
+    if request.method=='POST':
+        post_form = PostForm(request.POST)
+        if post_form.is_valid():
+            post = post_form.save(commit=False)
+            post.neighbourhood = hood
+            post.owner = request.user
+            post.save()
+            return redirect('my_hood', id)
+    else:
+        post_form = PostForm()
+    return render(request,'main/post.html',{'post_form':post_form,'title':title})
+
 
     
 

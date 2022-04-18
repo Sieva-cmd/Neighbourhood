@@ -1,11 +1,9 @@
-
-
-{% extends 'main/base.html' %}
-{% load static %}
+{% extends 'base.html' %}
 {% load bootstrap4 %}
-{% block content%}
-{{block.super}}
-<div class="sign1">
+{% load static %}
+{% block content %} 
+{{ block.super}}
+<div class="sign">
     <div class="row">
         <div class="col-md-3"></div>
        
@@ -16,7 +14,7 @@
                     <hr>
                     <form action="" method="post" class="mb-2" enctype="multipart/form-data">
                         {% csrf_token%}
-                        {{form}}
+                        {{ post_form}}
                         <button type="submit" class="btn btn-color login text-white"> {{title}}</button>
                     </form>
                  
@@ -29,5 +27,4 @@
         <div class="col-md-3"></div>
     </div>
   </div>
-  
 {%endblock%}
