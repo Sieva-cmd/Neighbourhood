@@ -20,8 +20,8 @@
                             </div>
 
                             <div class="post-details mt-3 mb-3">
-                                {% if user.profile.neighbourhood%}
-                                <p><span class="font-weight-bold ">Neighbourhood:</span>  {{user.profile.neighbourhood.name|title}}</p>
+                                {% if user.profile.neighborhood%}
+                                <p><span class="font-weight-bold ">Neighbourhood:</span>  {{user.profile.neighborhood.name|title}}</p>
                                 {%endif%}
                             </div>
                             <h6 class="font-weight-bold">Contact info: </h6>
@@ -47,7 +47,7 @@
                         {% csrf_token%}
                         {{ user_form}}
                         {{ profile_form}}
-                        <button type="submit" class="btn btn-color login text-white"> Update Profile</button>
+                        <button type="submit" class="btn btn-color login text-yellow"> Update Profile</button>
                     </form>
                 </div>
             </div>

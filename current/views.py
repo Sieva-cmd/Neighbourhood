@@ -63,7 +63,41 @@ def profile(request, username):
 
     return render(request, 'main/profile.html', {'user_form':user_form,'profile_form':profile_form})
 
+@login_required(login_url='login')
+def user_hood(request,id):
+    current_user = request.user
+    hood = NeighbourHood.objects.get(id=id)
+    members = Profile.objects.filter(neighbourhood=hood)
+    businesses = Business.objects.filter(neighbourhood=hood)
+    posts = Post.objects.filter(neighbourhood=hood)
+    request.user.profile.neighbourhood = hood
+    request.user.profile.save()
+    
+    return render(request, 'main/userhood.html', {'hood': hood,'businesses':businesses,
+                                                            'posts':posts,'current_user':current_user,
+                                                            'members':members})
 
+@login_required(login_url='login')
+def leave_hood(request,id):
+    hood = NeighbourHood.objects.get(id=id)
+    request.user.profile.neighbourhood = None
+    request.user.profile.save()
+    return redirect('hoods')															
+
+@login_required(login_url='login')
+def update_hood(request,id):
+    title = 'UPDATE HOOD'
+    instance= NeighbourHood.objects.get(id=id)
+    if request.method=='POST':
+        form = HoodForm(request.POST,request.FILES,instance=instance)
+        if form.is_valid():
+           form.save()
+        messages.success(request, ('Hood Updated Successfullly'))
+        return redirect('hoods')
+    else:
+        form = HoodForm(instance=instance)
+    return render(request,'all-neighbour/newhood.html',{'form':form,'title':title})
+    
 
 def login_request(request):
 	if request.method == "POST":
