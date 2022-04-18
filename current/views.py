@@ -63,6 +63,18 @@ def profile(request, username):
 
     return render(request, 'main/profile.html', {'user_form':user_form,'profile_form':profile_form})
 
+
+def user_profile(request, username):
+    current_user=request.user       
+    user_poster = get_object_or_404(User, username=username)
+    
+    if request.user == user_poster:
+        return redirect('profile', username=request.user.username)
+      
+    return render(request, 'main/member.html', {'user_poster': user_poster,
+                                                     'current_user':current_user})
+
+
 @login_required(login_url='login')
 def user_hood(request,id):
     current_user = request.user

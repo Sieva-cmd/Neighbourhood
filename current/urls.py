@@ -17,6 +17,8 @@ urlpatterns =[
     path('newpost/<id>/', views.new_post, name='newpost'),
     path('update_post/<id>/<post_id>/post/', views.update_post, name='update_post'),
     path('delete_post/<id>/<post_id>/', views.delete_post, name='delete_post'),
+    path('user_profile/<username>/', views.user_profile, name='user_profile'),
+
     path('update_business/<id>/<bus_id>/business/', views.update_business, name='update_business'),
     re_path(r'register/',views.register_request, name="register"),
     re_path(r'login/', views.login_request, name="login"),
