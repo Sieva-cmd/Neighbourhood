@@ -168,6 +168,15 @@ def update_post(request,id,post_id):
     return render(request,'main/post.html',{'post_form':post_form,'title':title})
 
 
+@login_required(login_url='login')
+def delete_post(request,id,post_id):
+    post= Post.objects.get(id=post_id)
+    post.delete_post()
+    messages.info(request, ('Post Deleted'))
+    return redirect('my_hood', id)
+
+
+
 
     
 
