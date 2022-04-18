@@ -1,17 +1,28 @@
-<style>
-    .container{
-        background-image:'static/images/karen.jpg';
-    }
-</style>
+
 
 {%extends 'main/base.html'%}
 {% load static %}
 {% block content %}
 {{block.super}}
-<div class="container">
+<div class="container" >
     <div class="row">
-        <div class="col-md-12">
-            Welcome to MyNeighourhood
+
+        <div class="col-md-12" >
+            <div class="card" style="align-items: center;">
+                <div class="card-header">
+                    <img src="{%static 'images/karen.jpg'%}" alt=""> 
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title" style="font-style: italic; color: blue;">Neighbourhood</h5>
+                  <p class="card-text" style="font-style: italic; color: blue;">Welcome to my neighbourhood</p>
+                  {% if user.is_authenticated %}
+                  <a href="/hoods" class="btn btn-primary">Join Neighbourhood</a>
+                  {%else%}
+                  <a href="/register"> SIGN UP</a>
+                  {%endif%}
+                </div>
+                <div class="card-footer">    <p class="copyright text-center"><small>&copy; 2022 All Rights Reserved.</small></p></div>
+              </div>
         </div>
     </div>
 </div>
