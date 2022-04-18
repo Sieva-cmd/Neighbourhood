@@ -36,6 +36,12 @@ class NeighbourHood(models.Model):
     def find_neighborhood(cls, neighborhood_id):
         return cls.objects.filter(id=neighborhood_id)
 
+    @classmethod
+    def search_neighbourhood(cls,search_term):
+        hood = cls.objects.filter(name__icontains=search_term)
+        return hood
+    
+
     
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')

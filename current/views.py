@@ -190,8 +190,17 @@ def delete_post(request,id,post_id):
 
 
 
-    
+@login_required(login_url='login')   
+def search_hood(request):
+    if 'hood' in request.GET and request.GET["hood"]:
+        search_term =request.GET.get("hood")
+        searched_post =NeighbourHood.search_neighbourhood(search_term)
+        message =f"{search_term}"
 
+        return render(request,'main/search.html',{"messages":message,"hoods":searched_post})
+    else:
+        message ="You haven't searched for an neighbourhood"
+        return render(request, 'main/search.html', {"message":message}) 
 def login_request(request):
 	if request.method == "POST":
 		form = AuthenticationForm(request, data=request.POST)

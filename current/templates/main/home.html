@@ -1,6 +1,18 @@
+<style>
+    .container{
+        background-image:'static/images/karen.jpg';
+    }
+</style>
+
 {%extends 'main/base.html'%}
 {% load static %}
 {% block content %}
 {{block.super}}
-<p>works</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            Welcome to MyNeighourhood
+        </div>
+    </div>
+</div>
 {%endblock%}

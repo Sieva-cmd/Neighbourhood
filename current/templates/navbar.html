@@ -1,8 +1,15 @@
 <nav class="navbar  navbar-light bg-light">
-    <a class="navbar-brand" href="/ ">My Neighbourhood</a>
+    <a class="navbar-brand" href="">My Neighbourhood</a>
+    <li style="list-style: none;"> <a href=" /">Home</a></li>
     <ul class="nav justify-content-start">
+  
       <li> <a href="/hoods">Neighbourhood</a></li>
+     
     </ul>
+    <form class="form-inline" action=" {% url 'search_hood'%}" role="search" >
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="hood">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
    
   
     <ul class="nav justify-content-end">
