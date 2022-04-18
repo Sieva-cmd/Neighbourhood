@@ -12,6 +12,7 @@ urlpatterns =[
     path('my_hood/<id>', views.user_hood, name='my_hood'),
     path('leave-hood/<id>', views.leave_hood, name='leave_hood'),
     path('update_hood/<id>/', views.update_hood, name='update_hood'),
+    path('newbusiness/<id>/', views.new_business, name='newbusiness'),
     re_path(r'register/',views.register_request, name="register"),
     re_path(r'login/', views.login_request, name="login"),
     re_path(r'logout', views.logout_request, name= "logout"),

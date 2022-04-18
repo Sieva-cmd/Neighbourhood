@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http  import Http404,HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import  render, redirect,get_object_or_404
-from .forms import HoodForm, NewUserForm,UpdateUserForm,UpdateUserProfileForm,UserCreationForm 
+from .forms import HoodForm, NewUserForm,UpdateUserForm,UpdateUserProfileForm,UserCreationForm,BusinessForm
 from django.contrib.auth import login,authenticate,logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
@@ -97,6 +97,22 @@ def update_hood(request,id):
     else:
         form = HoodForm(instance=instance)
     return render(request,'all-neighbour/newhood.html',{'form':form,'title':title})
+
+@login_required(login_url='login')
+def new_business(request,id):
+    hood = NeighbourHood.objects.get(id=id)
+    title = 'ADD BUSINESS'
+    if request.method=='POST':
+        bus_form = BusinessForm(request.POST,request.FILES)
+        if bus_form.is_valid():
+            business = bus_form.save(commit=False)
+            business.neighbourhood = hood
+            business.owner = request.user.profile
+            business.save()
+            return redirect('my_hood', id)
+    else:
+        bus_form = BusinessForm()
+    return render(request,'main/business.html',{'bus_form':bus_form,'title':title})
     
 
 def login_request(request):
