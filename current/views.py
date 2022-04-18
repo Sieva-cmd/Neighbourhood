@@ -130,6 +130,15 @@ def update_business(request,id,bus_id):
 
 
 @login_required(login_url='login')
+def delete_business(request,id,bus_id):
+    business= Business.objects.get(id=bus_id)
+    business.delete_business()
+    messages.info(request, ('Business Deleted'))
+    return redirect('my_hood', id)
+
+
+
+@login_required(login_url='login')
 def new_post(request,id):
     hood = NeighbourHood.objects.get(id=id)
     title = 'ADD POST'
