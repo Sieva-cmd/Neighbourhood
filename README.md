@@ -28,6 +28,9 @@ A clone of awards project
 ## Installation
 Click on this link to view the website in github https://github.com/Sieva-cmd/Neighbourhood.git
 
+## live Link
+- https://n1eighbor.herokuapp.com/
+
 ## Technology used 
 - PYTHON - for backend coding
 - HTML - for structuring
